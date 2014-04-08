@@ -2,15 +2,12 @@
 
 class Graph:
         
-    def __init__(self, node_num = 10, mode = 3, edge_prob = 0.1, cont = 0, multi_g = 0, directed = 0):
+    def __init__(self, node_num, mode):
         self.graph = None
+        self.nodes = []
         self.node_num = node_num
         self.mode = mode
-        self.edge_prob = edge_prob
-        self.cont = cont
-        self.multi_g = multi_g
-        self.directed = directed
-        
+
         self._set_structure()
     
     def _set_structure(self):
@@ -18,12 +15,14 @@ class Graph:
             print "Error : number of nodes equal 0 (node_num, Graph module)"
             return
         
+        self.graph = [Node(_idx=x) for x in range(self.node_num)]
+        
         if self.mode == 0:
-            self.graph = [Node(_idx=x) for x in range(self.node_num)]
+            pass
         elif self.mode == 1:
             self.graph = [[0] * self.node_num for _ in range(self.node_num)]
         elif self.mode == 2:
-            self.graph = [Node(_idx=x) for x in range(self.node_num)]
+            pass
         else:
             print "Error : invalid argument (mode, Graph module)"
             
@@ -34,16 +33,16 @@ class Graph:
         
         str_repr = ""
         
-        if self.mode == 1:
+        if self.mode == 0:
             pass
         
-        elif self.mode == 2:
+        elif self.mode == 1:
             for row in self.graph:
                 for col in row:
                     str_repr += str(col) + " "
                 str_repr += "\n"
                 
-        elif self.mode == 3:
+        elif self.mode == 2:
             pass
         
         else:
@@ -59,6 +58,27 @@ class Graph:
     def write(self, file_path):
         "writes graph to file, adds format to start"
         pass
+    
+    def add_node(self, number = 1):
+        pass
+    
+    def add_edge(self, start_node, end_node, value = 1):
+        if self.graph == None:
+            print "Graph not initialized"
+            return
+        
+        if self.mode == 0:
+            pass
+        
+        elif self.mode == 1:
+            self.graph[start_node][end_node] = value
+                
+        elif self.mode == 2:
+            pass
+        
+        else:
+            print "Error : invalid argument (mode, Graph module)"
+            return
     
 
 class Node:

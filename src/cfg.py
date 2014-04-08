@@ -17,14 +17,28 @@ Multigraph :
         
 Directed : 0/1
 '''
-    
-mode = 0
-num_nodes = 10
-edge_prob = 0.2
+
+# --------------------
+## Nodes
+# --------------------
+
+mode = 1
+num_nodes = 5
+
+# --------------------
+## Edges
+# --------------------
+
+edge_prob = 0.4
 cont = 0
 multi_g = 0
 multi_g_edge_prob = 0.1
 directed = 0
+loops = 0
+
+edge_weights = 1
+edge_w_type = 0             # 0 = int, 1 = float
+edge_w_interval = [0, 10]
 
 # --------------------
 ## Special settings
