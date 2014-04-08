@@ -1,28 +1,7 @@
 
 
 class Graph:
-    
-    '''
-    Graph mode :
-        1 - adjacency list
-        2 - adjacency matrix
-        3 - object representation
         
-    Number of nodes n
-        
-    Edge probability :
-        for each two nodes is edge inserted by this probability, 1 = full graph
-        
-    Continuous graph :
-        0/1 - if 1, checks graph if all nodes are connected, if not, generates randomly new edge
-        
-    Multigraph :
-        n - if not zero, inserts n edges for every tuple of nodes, single edge with given probability
-        
-    Directed : 0/1
-    '''
-    
-    
     def __init__(self, node_num = 10, mode = 3, edge_prob = 0.1, cont = 0, multi_g = 0, directed = 0):
         self.graph = None
         self.node_num = node_num
@@ -49,7 +28,29 @@ class Graph:
             print "Error : invalid argument (mode, Graph module)"
             
     def __str__(self):
-        "print method of graph"
+        if self.graph == None:
+            print "Graph not initialized"
+            return
+        
+        str_repr = ""
+        
+        if self.mode == 1:
+            pass
+        
+        elif self.mode == 2:
+            for row in self.graph:
+                for col in row:
+                    str_repr += str(col) + " "
+                str_repr += "\n"
+                
+        elif self.mode == 3:
+            pass
+        
+        else:
+            print "Error : invalid argument (mode, Graph module)"
+            return ""
+        
+        return str_repr
     
     def read(self, file_path):
         "reads graph from file,  format is read srom file first line"

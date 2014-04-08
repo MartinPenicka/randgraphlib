@@ -6,9 +6,13 @@ class Graphgen:
     def __init__(self):
         pass
     
-    def gen_common(self, node_num, edge_num, directed):
-        
-        graph = cmpn.Graph()
-        
-        for node in range(node_num):
-            graph.node_list.append(cmpn.Node(node))
+    def gen_common(self, graph):
+        pass
+    
+    def gen_directed(self, graph):
+        pass
+    
+    def gen_colored(self, graph):
+        pass
+    
+    
