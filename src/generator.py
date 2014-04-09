@@ -1,19 +1,24 @@
 
-import components as cmpn
+from components import graphAM as g
 import random as r
 import cfg
 
 class Graphgen:
     
     def __init__(self):
-        pass
+        self.graph = None
+    
+    def set_graph(self, graph):
+        self.graph = graph
     
     def generate(self, cfg):
         
-        graph = cmpn.Graph(cfg.num_nodes, cfg.mode)
+        #TODO: graph module must not depend on representation
+        if self.graph == None:
+            self.graph = g.GraphAM(cfg.num_nodes)
         
-        for node in range(graph.node_num):
-            for node2 in range(graph.node_num):
+        for node in range(self.graph.node_num):
+            for node2 in range(self.graph.node_num):
                 if node == node2 and cfg.loops == 0:
                     continue
                 
@@ -22,20 +27,20 @@ class Graphgen:
                     
                     weight = self._get_wight()
                     
-                    graph.add_edge(node, node2, weight)
+                    self.graph.add_edge(node, node2, weight)
                     if cfg.directed == 0:
-                        graph.add_edge(node2, node, weight)
+                        self.graph.add_edge(node2, node, weight)
                     
-                    if cfg.multi_g > 0 and graph.mode != 1:
+                    if cfg.multi_g > 0 and self.graph.repr_type != 'AM':
                         for _ in range(cfg.multi_g):
                             if r.random() < cfg.multi_g_edge_prob:
                                 weight = self._get_wight()
                                 
-                                graph.add_edge(node, node2, weight)
+                                self.graph.add_edge(node, node2, weight)
                                 if cfg.directed == 0:
-                                    graph.add_edge(node2, node, weight)                            
+                                    self.graph.add_edge(node2, node, weight)                            
         
-        return graph
+        return self.graph
     
     def _get_wight(self):
         weight = 1
@@ -43,10 +48,16 @@ class Graphgen:
                 if cfg.edge_w_type == 0:
                     weight = r.randint(cfg.edge_w_interval[0], cfg.edge_w_interval[1])
                 else:
-                    pass
+                    weight = r.uniform(cfg.edge_w_interval[0], cfg.edge_w_interval[1])
         return weight
     
-    def aa(self):
+    def _fully_connect(self):
+        
+        components = []
+        for node in range(self.graph.num_nodes):
+            g_cmp = []
+            
+    def _split_to_components(self):
         pass
     
 
