@@ -4,4 +4,5 @@ Test config file for parameters inconsistency
 '''
 
 def test_cfg_file(cfg):
+    #TODO: Test method for cfg consistency
     pass

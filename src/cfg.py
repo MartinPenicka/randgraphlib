@@ -17,6 +17,7 @@ Multigraph :
         
 Directed : 0/1
 '''
+#TODO: Write cfg description
 
 # --------------------
 ## Nodes
@@ -28,8 +29,8 @@ num_nodes           = 7
 ## Edges
 # --------------------
 
-edge_prob           = 0.3
-full_connected      = 0
+edge_prob           = 0
+full_connected      = 1
 multi_g             = 1             # 0 = off, x = max number of multi-edges
 multi_g_edge_prob   = 0.1
 directed            = 0

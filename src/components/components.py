@@ -2,12 +2,12 @@
 
 class Graph:
         
-    def __init__(self, node_num):
+    def __init__(self, num_nodes):
         self.graph = None
         self.nodes = []
-        self.node_num = node_num
+        self.num_nodes = num_nodes
         
-        self.graph = [Node(_idx=x) for x in range(self.node_num)]   
+        self.graph = [Node(_idx=x) for x in range(self.num_nodes)]   
             
     def __str__(self):
         pass
