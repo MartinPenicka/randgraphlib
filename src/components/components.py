@@ -2,15 +2,16 @@
 
 class Graph:
         
-    def __init__(self, num_nodes):
+    def __init__(self, num_nodes, directed):
         self.graph = None
         self.nodes = []
         self.num_nodes = num_nodes
+        self.directed = directed
         
         self.graph = [Node(_idx=x) for x in range(self.num_nodes)]   
             
     def __str__(self):
-        pass
+        return ""
     
     def read(self, file_path):
         "reads graph from file,  format is read srom file first line"
@@ -21,6 +22,9 @@ class Graph:
         pass
     
     def add_node(self, number = 1):
+        pass
+    
+    def remove_node(self, node_idx):
         pass
     
     def add_edge(self, start_node, end_node, value = 1):

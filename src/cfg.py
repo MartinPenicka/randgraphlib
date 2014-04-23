@@ -29,11 +29,11 @@ num_nodes           = 7
 ## Edges
 # --------------------
 
-edge_prob           = 0
-full_connected      = 1
-multi_g             = 1             # 0 = off, x = max number of multi-edges
+edge_prob           = 0.2             # 0 = every node is in separate component, 1= complete graph
+full_connected      = 1             # 1 = all nodes are in single component
+multi_g             = 0             # 0 = off, x = max number of multi-edges
 multi_g_edge_prob   = 0.1
-directed            = 0
+directed            = 1
 loops               = 0
 
 edge_weights        = 0

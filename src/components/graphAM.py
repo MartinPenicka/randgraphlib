@@ -3,8 +3,8 @@ from components import Graph
 
 class GraphAM(Graph):
     
-    def __init__(self, num_nodes):
-        Graph.__init__(self, num_nodes)
+    def __init__(self, num_nodes, directed):
+        Graph.__init__(self, num_nodes, directed)
         
         self.repr_type = 'AM'
         self.graph = [[0] * self.num_nodes for _ in range(self.num_nodes)]
@@ -41,6 +41,8 @@ class GraphAM(Graph):
             return
         
         self.graph[start_node][end_node] = value
+        if self.directed == 0:
+            self.graph[end_node][start_node] = value
         
     def get_node_successors(self, node_idx):
         suc = []

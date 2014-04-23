@@ -1,5 +1,5 @@
 
-from components import graphAM as g
+from components.graphAM import GraphAM
 import random as r
 import cfg
 import cfg_tester
@@ -20,7 +20,7 @@ class Graphgen:
         
         #TODO: graph module must not depend on representation
         if self.graph == None:
-            self.graph = g.GraphAM(cfg.num_nodes)
+            self.graph = GraphAM(cfg.num_nodes, cfg.directed)
         
         for node in range(self.graph.num_nodes):
             for node2 in range(self.graph.num_nodes):
@@ -30,17 +30,13 @@ class Graphgen:
                 # add new edge
                 if r.random() < cfg.edge_prob:
                     
-                    #TODO: repair get weight -> not same in common graph
                     self.graph.add_edge(node, node2, self._get_weight())
-                    if cfg.directed == 0:
-                        self.graph.add_edge(node2, node, self._get_weight())
                     
                     if cfg.multi_g > 0 and self.graph.repr_type != 'AM':
                         for _ in range(cfg.multi_g):
                             if r.random() < cfg.multi_g_edge_prob:                                
                                 self.graph.add_edge(node, node2, self._get_weight())
-                                if cfg.directed == 0:
-                                    self.graph.add_edge(node2, node, self._get_weight())
+
         if cfg.full_connected == 1:
             self._fully_connect()                        
         
@@ -58,21 +54,16 @@ class Graphgen:
     def _fully_connect(self):
         
         components = alg.split_to_components(self.graph)
-        while len(components) != 1:
+        while len(components) > 1:
             c1 = components.pop(0)
             c2 = components.pop(0)
             
             n1 = r.randint(0, len(c1)-1)
             n2 = r.randint(0, len(c2)-1)
             self.graph.add_edge(c1[n1], c2[n2], self._get_weight())
-            if self.cfg.directed == 0:
-                self.graph.add_edge(c1[n2], c2[n1], self._get_weight())
             
             new_c = c1 + c2
             components.append(new_c)
-            print len(components)
-        print len(components)
-        print components
             
     
 
