@@ -1,5 +1,6 @@
-
 from components import Graph
+from src.utiltools import mkdir
+import os, sys
 
 class GraphAM(Graph):
     
@@ -10,7 +11,7 @@ class GraphAM(Graph):
         self.graph = [[0] * self.num_nodes for _ in range(self.num_nodes)]
         
     def __str__(self):
-        if self.graph == None:
+        if self.graph == None or self.graph == []:
             print "Graph not initialized"
             return
     
@@ -24,16 +25,30 @@ class GraphAM(Graph):
         return str_repr
     
     def read(self, file_path):
-        #TODO: Method for reading adjacencz matrices from file
-        pass
-    
+        if not os.path.exists(file_path):
+            sys.stderr.write('graphAM:: Error -> read : no such file exists')
+            exit()
+        
+        self.graph = []
+        with open(file_path, 'r') as fr:
+            for line in fr.read().splitlines():
+                if line[0] == '#':
+                    continue
+                self.graph.append([int(i) for i in line.split(',')])
+   
     def write(self, file_path):
-        #TODO: Method for writing adjacency matrices to files
-        pass
+        mkdir(file_path)
+        
+        with open(file_path, 'w') as fw:
+            fw.write("#Adjacency matrix graph\n")
+            for row in self.graph:
+                fw.write(str(row)[1:-1] + '\n')
     
-    def add_node(self, number=1):
-        #TODO: Method for adding new nodes to existing matrix
-        pass
+    def add_node(self):
+        for row in self.graph:
+            row.append(0)
+        self.graph.append([0] * len(self.graph[0]))
+        self.num_nodes += 1
     
     def add_edge(self, start_node, end_node, value=1):
         if self.graph == None:
@@ -44,12 +59,7 @@ class GraphAM(Graph):
         if self.directed == 0:
             self.graph[end_node][start_node] = value
         
-    def get_node_successors(self, node_idx):
-        suc = []
-        for node in range(self.num_nodes):
-            if self.graph[node_idx][node] == 1:
-                suc.append(node)
-                
-        return suc
+    def get_node_successors(self, node_idx):               
+        return [index for index, succ in enumerate(self.graph[node_idx]) if succ == 1]
     
 #TODO: Write unittests for graphAM.py

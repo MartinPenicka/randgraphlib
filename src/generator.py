@@ -8,39 +8,34 @@ import algorithms as alg
 class Graphgen:
     
     def __init__(self):
-        self.graph = None
+        pass
     
-    def set_graph(self, graph):
-        self.graph = graph
-    
-    def generate(self, cfg):
+    def generate(self, graph, cfg):
         
         self.cfg = cfg
         cfg_tester.test_cfg_file(cfg)
         
-        #TODO: graph module must not depend on representation
-        if self.graph == None:
-            self.graph = GraphAM(cfg.num_nodes, cfg.directed)
-        
-        for node in range(self.graph.num_nodes):
-            for node2 in range(self.graph.num_nodes):
+        for node in range(graph.num_nodes):
+            for node2 in range(graph.num_nodes):
                 if node == node2 and cfg.loops == 0:
                     continue
                 
                 # add new edge
-                if r.random() < cfg.edge_prob:
+                rr = r.random()
+                if rr < cfg.edge_prob:
+                    print rr
                     
-                    self.graph.add_edge(node, node2, self._get_weight())
+                    graph.add_edge(node, node2, self._get_weight())
                     
-                    if cfg.multi_g > 0 and self.graph.repr_type != 'AM':
+                    if cfg.multi_g > 0 and graph.repr_type != 'AM':
                         for _ in range(cfg.multi_g):
                             if r.random() < cfg.multi_g_edge_prob:                                
-                                self.graph.add_edge(node, node2, self._get_weight())
+                                graph.add_edge(node, node2, self._get_weight())
 
         if cfg.full_connected == 1:
-            self._fully_connect()                        
+            self.fully_connect(graph)                        
         
-        return self.graph
+        return graph
     
     def _get_weight(self):
         weight = 1
@@ -51,26 +46,16 @@ class Graphgen:
                     weight = r.uniform(cfg.edge_w_interval[0], cfg.edge_w_interval[1])
         return weight
     
-    def _fully_connect(self):
+    def fully_connect(self, graph):
         
-        components = alg.split_to_components(self.graph)
+        components = alg.split_to_components(graph)
         while len(components) > 1:
             c1 = components.pop(0)
             c2 = components.pop(0)
             
             n1 = r.randint(0, len(c1)-1)
             n2 = r.randint(0, len(c2)-1)
-            self.graph.add_edge(c1[n1], c2[n2], self._get_weight())
+            graph.add_edge(c1[n1], c2[n2], self._get_weight())
             
             new_c = c1 + c2
             components.append(new_c)
-            
-    
-
-if __name__ == '__main__':
-    
-    gen = Graphgen()
-    
-    gr = gen.generate(cfg)
-    print gr
-    print alg.split_to_components(gr)

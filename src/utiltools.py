@@ -28,6 +28,10 @@ def mkdir(path):
     '''
     Checks if directory exists. If not, tries to create. If it is not possible to create dir (insuficient rights, etc.), returns message to stderr.
     '''
+    splited = path.split('/')
+    if '.' in splited[-1]:
+        path = ''.join(splited[:-1])
+    
     if not os.path.exists(path):
         try:
             os.mkdir(path)
