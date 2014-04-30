@@ -1,22 +1,3 @@
-'''
-Graph mode :
-    1 - adjacency list
-    2 - adjacency matrix
-    3 - object representation
-        
-Number of nodes n
-        
-Edge probability :
-    for each two nodes is edge inserted by this probability, 1 = full graph
-        
-Connected graph :
-    0/1 - if 1, checks graph if exists path between all nodes, if not, generates randomly new edge
-        
-Multigraph :
-    n - if not zero, inserts n edges for every tuple of nodes, single edge with given probability
-        
-Directed : 0/1
-'''
 #TODO: Write cfg description
 
 # --------------------

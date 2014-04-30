@@ -12,7 +12,8 @@ class Graphgen:
     
     def generate(self, graph, cfg):
         
-        cfg_tester.test_cfg_file(cfg)
+        if not cfg_tester.test_cfg_file(cfg):
+            exit(1)
         
         self.gen_simple_graph(graph, cfg)
 
