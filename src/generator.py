@@ -12,25 +12,9 @@ class Graphgen:
     
     def generate(self, graph, cfg):
         
-        self.cfg = cfg
         cfg_tester.test_cfg_file(cfg)
         
-        for node in range(graph.num_nodes):
-            for node2 in range(graph.num_nodes):
-                if node == node2 and cfg.loops == 0:
-                    continue
-                
-                # add new edge
-                rr = r.random()
-                if rr < cfg.edge_prob:
-                    print rr
-                    
-                    graph.add_edge(node, node2, self._get_weight())
-                    
-                    if cfg.multi_g > 0 and graph.repr_type != 'AM':
-                        for _ in range(cfg.multi_g):
-                            if r.random() < cfg.multi_g_edge_prob:                                
-                                graph.add_edge(node, node2, self._get_weight())
+        self.gen_simple_graph(graph, cfg)
 
         if cfg.full_connected == 1:
             self.fully_connect(graph)                        
@@ -45,6 +29,22 @@ class Graphgen:
                 else:
                     weight = r.uniform(cfg.edge_w_interval[0], cfg.edge_w_interval[1])
         return weight
+    
+    def gen_simple_graph(self, graph, cfg):
+        for node in range(graph.num_nodes):
+            for node2 in range(graph.num_nodes):
+                if node == node2 and cfg.loops == 0:
+                    continue
+                
+                # add new edge
+                if r.random() < cfg.edge_prob:
+                    
+                    graph.add_edge(node, node2, self._get_weight())
+                    
+                    if cfg.multi_g > 0 and graph.repr_type != 'AM':
+                        for _ in range(cfg.multi_g):
+                            if r.random() < cfg.multi_g_edge_prob:                                
+                                graph.add_edge(node, node2, self._get_weight())
     
     def fully_connect(self, graph):
         
