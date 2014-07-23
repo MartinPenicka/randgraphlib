@@ -1,6 +1,7 @@
 from components import Graph
 from src.utiltools import mkdir
 import os, sys
+import pygraphviz as pgv
 
 class GraphAM(Graph):
     
@@ -13,7 +14,7 @@ class GraphAM(Graph):
     def __str__(self):
         if self.graph == None or self.graph == []:
             print "Graph not initialized"
-            return
+            return ''
     
         str_repr = ""
 
@@ -43,6 +44,41 @@ class GraphAM(Graph):
             fw.write("#Adjacency matrix graph\n")
             for row in self.graph:
                 fw.write(str(row)[1:-1] + '\n')
+                
+    def _create_pgv_object(self, update = False):
+        
+        if hasattr(self, 'pgv_object') and not update:
+            return
+        
+        if self.directed == 1:
+            self.pgv_object = pgv.AGraph(directed=True)
+        else:
+            self.pgv_object = pgv.AGraph(directed=False)
+            
+        for x in range(self.num_nodes):
+            self.pgv_object.add_node(str(x))
+            
+        for x in range(self.num_nodes):
+            for y in range(self.num_nodes):
+                if self.graph[x][y] > 0:
+                    self.pgv_object.add_edge(str(x), str(y))
+                
+    def plot_to_file(self, file_path):
+        
+        self._create_pgv_object()
+        
+        self.pgv_object.graph_attr.update(size="50!")
+        self.pgv_object.layout()
+        self.pgv_object.draw(file_path)
+        
+    def plot(self):
+        pass
+    
+    def write_dot(self, file_path):
+        
+        self._create_pgv_object()
+                    
+        self.pgv_object.write(file_path)
     
     def add_node(self):
         for row in self.graph:

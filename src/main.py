@@ -1,15 +1,15 @@
-from src.generator import *
-from src.components.graphAM import *
+from src.generator import Graphgen
+from src.components.graphAM import GraphAM
+from src.components.graphNodes import GraphNodes
+import algorithms as alg
+import cfg as cfg
 
 gen = Graphgen()
-graph = GraphAM(cfg.num_nodes, cfg.directed)
-
+#graph = GraphAM(cfg.num_nodes, cfg.directed)
+graph = GraphNodes(cfg.num_nodes, cfg.directed)
 
 gr = gen.generate(graph, cfg)
-print gr
-print alg.split_to_components(gr)
-gr.add_node()
-gr.add_node()
-print gr
-print alg.split_to_components(gr)
-gr.write('/home/martin/gr.amg')
+
+gr.plot_to_file('/home/martin/pokus.png')
+
+#alg.max_pairing(gr)

@@ -1,5 +1,3 @@
-
-from components.graphAM import GraphAM
 import random as r
 import cfg
 import cfg_tester
@@ -35,6 +33,9 @@ class Graphgen:
         for node in range(graph.num_nodes):
             for node2 in range(graph.num_nodes):
                 if node == node2 and cfg.loops == 0:
+                    continue
+                
+                if node2 < node and cfg.directed == 0:
                     continue
                 
                 # add new edge

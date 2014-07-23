@@ -4,17 +4,17 @@
 ## Nodes
 # --------------------
 
-num_nodes           = 7
+num_nodes           = 10
 
 # --------------------
 ## Edges
 # --------------------
 
-edge_prob           = 0.2             # 0 = every node is in separate component, 1= complete graph
+edge_prob           = 0.5           # 0 = every node is in separate component, 1= complete graph
 full_connected      = 1             # 1 = all nodes are in single component
 multi_g             = 0             # 0 = off, x = max number of multi-edges
 multi_g_edge_prob   = 0.1
-directed            = 1
+directed            = 0
 loops               = 0
 
 edge_weights        = 0
